@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}NEWS{% endblock %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+<body>
+{% block content %}
+
+<style>
+#subsub_nav li {
+    display: inline;
+    
+}
+</style>
+
+<center>
+<div id="sub_nav">
+      <ul id="subsub_nav">
+        <li><a href="http://feeds.feedburner.com/TechCrunchIT">IT</a></li>
+        <li><a href="http://feeds.feedburner.com/TechCrunch/startups">STARTUPS</a></li>
+        <li><a href="http://feeds.feedburner.com/TechCrunch/greentech">GREEN</a></li>
+        <li><a href="http://feeds.feedburner.com/TechCrunch/social">SOCIAL</a></li>
+        <li><a href="http://feeds.feedburner.com/TechCrunch/fundings-exits">EXITS</a></li>
+      </ul>
+ </div>
+</center>
+<div id="rss-feeds"></div>
+
+
+<script>
+    jQuery(function($) {
+      $("#rss-feeds").rss("http://www.rssmix.com/u/8239948/rss.xml",
+      {
+      	entryTemplate:'<li><a href="{url}">[{author}@{date}] <h3><strong>{title}</strong></h3></a>{teaserImage}<br/>{bodyPlain}</li><br/>',
+      	limit: 100
+      })
+    })
+</script>
+
+
+
+{% endblock %}
+</body>
+
+</html>

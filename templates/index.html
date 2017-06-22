@@ -1,0 +1,95 @@
+{% extends "base.html" %} {% block title %}HOME{% endblock %} {% block head %} {{ super() }} {% endblock %} {% block kanban %}</br>
+<div id="container_task">
+    </br>
+    </br>
+    </br>
+    <div class="task-list task-container" id="pending">
+        <h3 class="task_h3"><strong>PENDING</strong></h3>
+    </div>
+    <div class="task-list task-container" id="inProgress">
+        <h3 class="task_h3"><strong>IN PROGRESS</strong></h3>
+    </div>
+    <div class="task-list task-container" id="completed">
+        <h3 class="task_h3"><strong>COMPLETED</strong></h3>
+    </div>
+    <div class="task-list">
+        <h3 class="task_h3"><strong>ADD A TASK</strong></h3>
+        <form id="todo-form">
+            <input type="text" placeholder="Title" />
+            <textarea placeholder="Description"></textarea>
+            <input type="text" id="datepicker" placeholder="Due Date (dd/mm/yyyy)" />
+            <input type="button" class="btn btn-primary" value="Add Task" onclick="todo.add();" />
+        </form>
+        <input type="button" class="btn btn-primary" value="Clear Data" onclick="todo.clear();" />
+        <div id="delete-div_task">Drag Here to Delete</div>
+    </div>
+    <div style="clear:both;"></div>
+    <script type="text/javascript">
+        $( "#datepicker" ).datepicker();
+                        $( "#datepicker" ).datepicker("option", "dateFormat", "dd/mm/yy");
+        
+                        $(".task-container").droppable();
+                        $(".todo-task").draggable({ revert: "valid", revertDuration:200 });
+                        todo.init();
+    </script>
+</div>{% endblock %} {% block body %} {{ super() }} {% endblock %} {% block content %}
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"> <strong>TODAY</strong>
+            </div>
+            <div class="panel-body">
+                <center>
+                    <h3><div id="live_time"></div></h3>
+                    <h3><div id="the_date"></div></h3>
+                    </br>
+                    
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"> <strong>HEADLINES</strong>
+            </div>
+            <div id="rss-feeds"></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"> <strong>WORDS OF THE WEEK</strong>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body">{% for word in words %}
+                    <tr>
+                        <td>{{word}}</td>
+                        </br>
+                    </tr>{% endfor %}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="panel panel-default">
+            <div class="panel-heading text-center"> <strong>REFERENCE</strong>
+            </div>
+            <div class="panel-body">{% for result in reference %}
+                <tr>
+                    <td>{{result}}</td>
+                    </br>
+                </tr>{% endfor %}</div>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(function($) {
+          $("#rss-feeds").rss("http://rss.cnn.com/rss/cnn_topstories.rss",
+          {
+    
+            /** http://www.rssmix.com/u/8239948/rss.xml **/
+            entryTemplate:'<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>',
+            limit: 5
+          })
+        })
+</script>{% endblock %}
